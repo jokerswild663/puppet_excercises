@@ -5,7 +5,7 @@ file {'testing':
 	ensure	=> present,
 	mode 	=> 0640,
 	content	=> "I am the first of my kind",
-	before 	=> Notify['first']
+	#before 	=> Notify['first']
 }
 
 file {'next':
@@ -13,7 +13,7 @@ file {'next':
 	ensure	=> present,
 	mode 	=> 0640,
 	content	=> "I am the younger sibling",
-	before	=> Notify['second']
+	#before	=> Notify['second']
 }
 
 notify{'first':
@@ -23,3 +23,5 @@ notify{'first':
 notify{'second':
 	message => "the second file is being deployed"
 }
+
+File['testing'] -> Notify['first'] -> File['next'] -> Notify['second']
